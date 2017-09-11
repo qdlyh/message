@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	#box1{
+		width: 150px;
+		height: 150px;
+		border: 2px solid #999999;
+		float: left;
+	}
+	#box2{
+		width: 150px;
+		border: 2px solid #456454;
+		float: left;
+		margin-left: 30px;
+	}
+	#con li{
+	   	width: 100px;
+	   	border: 2px solid #874545;
+	   }
+	</style>
+</head>
+<body>
+   <div id="box1"></div>
+	<div id="box2">
+		<ul id="con">
+			<li>asddasd</li>
+			<li>12312313</li>
+			<li>asda12313</li>
+			<li>1231231332</li>
+		</ul>
+	</div>
+	<script type="text/javascript">
+	    window.onload =function(){
+	    	var box = document.getElementById('box')
+	    	var con = document.getElementById('con')
+	    	var lis = document.getElementsByTagName('li')
+
+	    	for(var i = 0;i<lis.length;i++){
+	    		lis[i].draggable=true
+	    		lis[i].flag=false
+	    		lis[i].ondragstart = function(){
+	    			this.flag = true
+	    		}
+	    		lis[i].ondragstart = function(){
+	    			this.flag = false
+	    		}
+	    	}
+	    	box.ondragstart=function(e){
+	    		e.preventDefault()
+	    	}
+	    	box.ondragstart=function(e){
+	    		e.preventDefault()
+	    	}
+	    	box.ondragstart=function(e){
+	    		e.preventDefault()
+	    	}
+	    	box.ondrop=function(e){
+                for(var i =0;i<lis.length;i++){
+                	if(lis[i].flag){
+                		box.appendChild(lis[i])
+                	}
+                }
+                e.preventDefault()
+	    	}
+	    	con.ondragleave = function(e){
+	    		e.preventDefault()
+	    	}
+	    	con.ondragleave = function(e){
+	    		e.preventDefault()
+	    	}
+	    	con.ondragleave = function(e){
+	    		e.preventDefault()
+	    	}
+	    	con.ondragleave = function(e){
+	    		for(var i =0;i<lis.length;i++){
+                	if(lis[i].flag){
+                		box.appendChild(lis[i])
+                	}
+                }
+                e.preventDefault()	
+	    	}
+	    }
+		
+	</script>
+</body>
+</html>

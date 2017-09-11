@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>留言板</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <style>
+ 
+    </style>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+        window.onload=function(){
+                //存储localStorage中的数据
+      var store = {
+        save(key,value){
+          localStorage.setItem(key,JSON.stringify(value))
+
+        },
+        fetch(key){
+          return JSON.parse(localStorage.getItem(key))||[]
+        }
+      }
+            new Vue({
+                el:'#box',
+                data:{
+                    myData:[],
+                    username:'',
+                    picked:'',
+                    message:'',
+                },
+                watch:{
+                 /*list:function(){   //监控list属性
+                   store.save('storage',this.list)
+                  }*/
+                   list:{
+                     handler(){
+                      store.save('storage',this.list)
+                 },
+                     deep:true
+                }
+
+              },
+                methods:{
+                    add(){
+                        this.myData.push({
+                            name:this.username,
+                            picked:this.picked,
+                            message:this.age
+                        });
+ 
+                        this.username='';
+                        this.message='';
+                        this.picked=''
+                    },
+                    deleteMsg(n){
+                        if(n==0){
+                            this.myData=[];
+                        }else{
+                            this.myData.splice(n,1);
+                        }
+                    }
+                }
+            });
+        };
+    </script>
+</head>
+<body>
+    <div class="container" id="box">
+        <hr>
+        <table class="table table-bordered table-hover">
+            <caption class="h3 text-info">信息表</caption>
+            <tr class="text-danger">
+                <th class="text-center">楼层</th>
+                <th class="text-center">名字</th>
+                <th class="text-center">性别</th>
+                <th class="text-center">留言</th>
+                <th class="text-center">操作</th>
+            </tr>
+            <tr class="text-center" v-for="(item,index) in myData">
+                <td>{{index+1}}楼</td>
+                <td>{{item.name}}</td>
+                <td>{{item.picked}}</td>
+                <td>{{item.message}}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#layer" v-on:click="Index=(item,index)">删除</button>
+                </td>
+            </tr>
+            <tr v-show="myData.length">
+                <td colspan="5" class="text-right">
+                    <button class="btn btn-danger btn-sm" v-on:click="Index=0" data-toggle="modal" data-target="#layer" >删除全部</button>
+                </td>
+            </tr>
+            <tr v-show="!myData.length">
+                <td colspan="5" class="text-center text-muted">
+                    <p>暂无数据....</p>
+                </td>
+            </tr>
+        </table>
+ 
+        <!--模态框 弹出框-->
+        <div role="dialog" class="modal fade bs-example-modal-sm" id="layer">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>×</span>
+                        </button>
+                        <h4 class="modal-title">确认删除么?</h4>
+                    </div>
+                    <div class="modal-body text-right">
+                        <button data-dismiss="modal" class="btn btn-primary btn-sm">取消</button>
+                        <button data-dismiss="modal" class="btn btn-danger btn-sm" v-on:click="deleteMsg(Index)">确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <form role="form">
+            <div class="form-group">
+                <label for="username">用户名:</label>
+                <input type="text" id="username" class="form-control" placeholder="输入用户名" v-model="username">
+            </div>
+            <div class="form-group">
+                <input type="radio" id="picked" value="男" v-model='picked'>
+                <label for="男">男</label>
+                <input type="radio" id="picked" value="女" v-model='picked'>
+                <label for="女">女</label>
+            </div>
+            <div class="form-group">
+                <label for="age">留 言:</label>
+                <textarea type="text" id="age" class="form-control" placeholder="输入留言" v-model="age" style="height: 300px;"></textarea>
+            </div>
+            <div class="form-group">
+                <input type="button" value="添加" class="btn btn-primary" v-on:click="add()">
+                <input type="reset" value="重置" class="btn btn-danger">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

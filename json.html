@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript" src="js/jquery-3.1.1.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			//url : "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=a&json=1&p=3&sid=1458_21078&req=2&csor=0&cb=jQuery11020563463404729017_1497526965823&_=1497526965826",
+			var http = new XMLHttpRequest()
+        $("#btn").click(function() {
+               $.getJSON("https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=a&json=1&p=3&sid=1458_21078&req=2&csor=0&cb=jQuery11020563463404729017_1497526965823&_=1497526965826callback=?", function(getUsers){
+          alert(getUsers.name);
+        });
+    });
+
+		
+	</script>
+<input type="button" value="数据导入" id="btn"/>
+</body>
+</html>
